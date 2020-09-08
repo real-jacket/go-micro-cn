@@ -5,7 +5,7 @@ This is the User service
 Generated with
 
 ```
-micro new user-service --namespace=ke.micro.book --alias=user --type=service
+micro new user-service --namespace=mu.micro.book --alias=user --type=service
 ```
 
 ## Getting Started
@@ -16,7 +16,7 @@ micro new user-service --namespace=ke.micro.book --alias=user --type=service
 
 ## Configuration
 
-- FQDN: ke.micro.book.service.user
+- FQDN: mu.micro.book.service.user
 - Type: service
 - Alias: user
 
@@ -45,11 +45,13 @@ make build
 ```
 
 Run the service
+
 ```
 ./user-service
 ```
 
 Build a docker image
+
 ```
 make docker
 ```
