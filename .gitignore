@@ -15,3 +15,8 @@
 # vendor/
 
 !.gitkepp
+user-service/default.etcd/member/snap/db
+user-service/default.etcd/member/wal/0000000000000000-0000000000000000.wal
+user-web/default.etcd/member/snap/db
+user-web/default.etcd/member/wal/0000000000000000-0000000000000000.wal
+user-web/default.etcd/member/wal/0.tmp
