@@ -20,7 +20,9 @@ var (
 	defaultRootPath         = "app"
 	defaultConfigFilePrefix = "application-"
 	etcdConfig              defaultEtcdConfig
+	jwtConfig               defaultJwtConfig
 	mysqlConfig             defaultMysqlConfig
+	redisConfig             defaultRedisConfig
 	profiles                defaultProfiles
 	m                       sync.RWMutex
 	inited                  bool
@@ -78,6 +80,8 @@ func Init() {
 	// 赋值
 	config.Get(defaultRootPath, "etcd").Scan(&etcdConfig)
 	config.Get(defaultRootPath, "mysql").Scan(&mysqlConfig)
+	config.Get(defaultRootPath, "redis").Scan(&redisConfig)
+	config.Get(defaultRootPath, "jwt").Scan(&jwtConfig)
 
 	// 标记已经初始化
 	inited = true
@@ -91,4 +95,14 @@ func GetMysqlConfig() (ret MysqlConfig) {
 // GetEtcdConfig 获取Etcd配置
 func GetEtcdConfig() (ret EtcdConfig) {
 	return etcdConfig
+}
+
+// GetJwtConfig 获取Jwt配置
+func GetJwtConfig() (ret JwtConfig) {
+	return jwtConfig
+}
+
+// GetRedisConfig 获取Redis配置
+func GetRedisConfig() (ret RedisConfig) {
+	return redisConfig
 }

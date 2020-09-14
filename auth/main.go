@@ -3,46 +3,47 @@ package main
 import (
 	"fmt"
 
+	"github.com/go-micro-cn/tutorials/auth/handler"
+	"github.com/go-micro-cn/tutorials/auth/model"
+	s "github.com/go-micro-cn/tutorials/auth/proto/auth"
 	"github.com/go-micro-cn/tutorials/basic"
 	"github.com/go-micro-cn/tutorials/basic/config"
-	"github.com/go-micro-cn/tutorials/user-web/handler"
 	"github.com/micro/cli/v2"
+	"github.com/micro/go-micro/v2"
 	log "github.com/micro/go-micro/v2/logger"
 	"github.com/micro/go-micro/v2/registry"
 	"github.com/micro/go-micro/v2/registry/etcd"
-	"github.com/micro/go-micro/v2/web"
 )
 
 func main() {
-	// 初始化配置
+	// 初始化配置、数据库等信息
 	basic.Init()
 
 	// 使用etcd注册
 	micReg := etcd.NewRegistry(registryOptions)
 
-	// 创建新服务
-	service := web.NewService(
-		// 后面两个web，第一个是指是web类型的服务，第二个是服务自身的名字
-		web.Name("mu.micro.book.web.user"),
-		web.Version("latest"),
-		web.Registry(micReg),
-		web.Address(":8088"),
+	// 新建服务
+	service := micro.NewService(
+		micro.Name("mu.micro.book.service.auth"),
+		micro.Registry(micReg),
+		micro.Version("latest"),
 	)
 
-	// 初始化服务
-	if err := service.Init(
-		web.Action(func(c *cli.Context) {
+	// 服务初始化
+	service.Init(
+		micro.Action(func(c *cli.Context) error {
+			// 初始化handler
+			model.Init()
 			// 初始化handler
 			handler.Init()
+			return nil
 		}),
-	); err != nil {
-		log.Fatal(err)
-	}
+	)
 
-	// 注册登录接口
-	service.HandleFunc("/user/login", handler.Login)
+	// 注册服务
+	s.RegisterServiceHandler(service.Server(), new(handler.Service))
 
-	// 运行服务
+	// 启动服务
 	if err := service.Run(); err != nil {
 		log.Fatal(err)
 	}

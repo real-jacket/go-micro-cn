@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/go-micro-cn/tutorials/user-service/basic"
-	"github.com/go-micro-cn/tutorials/user-service/basic/config"
+	"github.com/go-micro-cn/tutorials/basic"
+	"github.com/go-micro-cn/tutorials/basic/config"
 	"github.com/go-micro-cn/tutorials/user-service/handler"
 	"github.com/go-micro-cn/tutorials/user-service/model"
 	s "github.com/go-micro-cn/tutorials/user-service/proto/user"
